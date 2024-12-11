@@ -1,4 +1,5 @@
-import { Stack, router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Stack, router, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import Button from "../components/themed/Button";
@@ -8,6 +9,7 @@ import { triggerHaptic } from "../utils/haptics";
 export default function GameOverScreen() {
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
   const scaleAnim = React.useRef(new Animated.Value(0.5)).current;
+  const { result } = useLocalSearchParams();
 
   React.useEffect(() => {
     Animated.parallel([
@@ -27,12 +29,28 @@ export default function GameOverScreen() {
 
   const handlePlayAgain = async () => {
     await triggerHaptic("medium");
-    router.replace("/screens/game");
+    // Reset the game board before navigating
+    const newState = {
+      board: Array(9).fill(""),
+      currentPlayer: "X"
+    };
+    await AsyncStorage.setItem("gameState", JSON.stringify(newState));
+    router.push("/screens/game");
   };
 
   const handleMainMenu = async () => {
     await triggerHaptic("light");
+    // Clear game state when going to main menu
+    await AsyncStorage.removeItem("gameState");
+    await AsyncStorage.removeItem("scores");
     router.replace("/");
+  };
+
+  const getResultMessage = () => {
+    if (result === "draw") {
+      return "It's a Draw!";
+    }
+    return `Player ${result} Wins!`;
   };
 
   return (
@@ -58,7 +76,7 @@ export default function GameOverScreen() {
         >
           Game Over!
         </Text>
-        <Text style={styles.finalScore}>Final Score: 0-3</Text>
+        <Text style={styles.resultMessage}>{getResultMessage()}</Text>
         <View style={styles.buttonContainer}>
           <Button
             title="Play Again"
@@ -107,11 +125,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold"
   },
-  finalScore: {
-    fontSize: 24,
+  resultMessage: {
+    fontSize: 28,
     marginBottom: 30,
     color: "#333",
-    textAlign: "center"
+    textAlign: "center",
+    fontWeight: "bold"
   },
   buttonContainer: {
     width: "100%",
