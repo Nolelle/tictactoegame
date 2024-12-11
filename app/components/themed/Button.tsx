@@ -15,7 +15,7 @@ type ButtonProps = {
   disabled?: boolean;
 };
 
-export const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<ButtonProps> = ({
   title,
   onPress,
   style,
@@ -52,3 +52,5 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   }
 });
+
+export default Button;

@@ -1,27 +1,27 @@
-import { Text } from "@/app/components/themed/Text";
-import * as Haptics from "expo-haptics";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { triggerHaptic } from "../utils/haptics";
+import Text from "./themed/Text";
 
-type GameBoardProps = {
+interface GameBoardProps {
   board: string[];
   onCellPress: (index: number) => void;
   currentPlayer: string;
   settings: {
     vibrationEnabled: boolean;
   };
-};
+}
 
-export const GameBoard: React.FC<GameBoardProps> = ({
+function GameBoard({
   board,
   onCellPress,
   currentPlayer,
   settings
-}) => {
-  const handlePress = (index: number) => {
+}: GameBoardProps) {
+  const handlePress = async (index: number) => {
     if (board[index] === "") {
       if (settings.vibrationEnabled) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        await triggerHaptic("light");
       }
       onCellPress(index);
     }
@@ -41,31 +41,34 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       ))}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   board: {
-    width: 300,
-    height: 300,
     flexDirection: "row",
     flexWrap: "wrap",
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 10
+    justifyContent: "center",
+    alignItems: "center",
+    width: 300, // Board width
+    height: 300, // Board height
+    backgroundColor: "#f0f0f0"
   },
   cell: {
-    width: "33.33%",
-    height: "33.33%",
-    borderWidth: 2,
-    borderColor: "#ddd",
+    width: 100, // Cell width (adjust for board size)
+    height: 100, // Cell height
+    borderWidth: 1,
+    borderColor: "#000",
     justifyContent: "center",
     alignItems: "center"
   },
   cellMarked: {
-    backgroundColor: "#f0f0f0"
+    backgroundColor: "#dcdcdc" // Highlight for marked cells
   },
   cellText: {
-    fontSize: 40,
-    fontWeight: "bold"
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333"
   }
 });
+
+export default GameBoard;

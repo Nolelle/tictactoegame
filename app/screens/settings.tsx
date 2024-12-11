@@ -2,9 +2,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Stack, router } from "expo-router";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Button } from "../components/themed/Button";
-import { Switch } from "../components/themed/Switch";
-import { Text } from "../components/themed/Text";
+import Button from "../components/themed/Button";
+import Switch from "../components/themed/Switch";
+import Text from "../components/themed/Text";
 import { useGameEffects } from "../hooks/useGameEffects";
 import { soundManager } from "../utils/sound";
 

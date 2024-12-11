@@ -8,7 +8,7 @@ type SwitchProps = {
   disabled?: boolean;
 };
 
-export const Switch: React.FC<SwitchProps> = ({
+const Switch: React.FC<SwitchProps> = ({
   value,
   onValueChange,
   label,
@@ -44,3 +44,5 @@ const styles = StyleSheet.create({
     marginRight: 10
   }
 });
+
+export default Switch;

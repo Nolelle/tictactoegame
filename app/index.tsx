@@ -1,27 +1,26 @@
-// app/index.tsx
-import * as Haptics from "expo-haptics";
 import { Stack, router } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Button } from "./components/themed/Button";
-import { Text } from "./components/themed/Text";
+import Button from "./components/themed/Button";
+import Text from "./components/themed/Text";
+import { triggerHaptic } from "./utils/haptics";
 
 export default function MenuScreen() {
   const [selectedSymbol, setSelectedSymbol] = useState<"X" | "O">("X");
 
-  const handleSymbolSelect = (symbol: "X" | "O") => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  const handleSymbolSelect = async (symbol: "X" | "O") => {
+    await triggerHaptic("light");
     setSelectedSymbol(symbol);
   };
 
-  const handleStartGame = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    router.push("/game");
+  const handleStartGame = async () => {
+    await triggerHaptic("medium");
+    router.push("../screens/game");
   };
 
-  const handleSettings = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    router.push("/settings");
+  const handleSettings = async () => {
+    await triggerHaptic("light");
+    router.push("../screens/settings");
   };
 
   return (
@@ -93,7 +92,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "80%",
     alignItems: "center",
-    marginBottom: 30
+    marginBottom: 30,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
   },
   symbolTitle: {
     fontSize: 24,
@@ -102,7 +109,8 @@ const styles = StyleSheet.create({
   symbolButtons: {
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "100%"
+    width: "100%",
+    gap: 20
   },
   symbolButton: {
     width: 80,
@@ -111,7 +119,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 2,
     borderColor: "#ddd",
-    borderRadius: 10
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2
   },
   selectedSymbol: {
     backgroundColor: "#4CAF50",
@@ -119,13 +136,18 @@ const styles = StyleSheet.create({
   },
   symbolText: {
     fontSize: 36,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "#333"
   },
   startButton: {
     backgroundColor: "#4CAF50",
-    marginBottom: 10
+    marginBottom: 10,
+    width: "80%",
+    height: 50
   },
   settingsButton: {
-    backgroundColor: "#2196F3"
+    backgroundColor: "#2196F3",
+    width: "80%",
+    height: 50
   }
 });

@@ -1,15 +1,15 @@
-import { Text } from "@/app/components/themed/Text";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import Text from "../components/themed/Text";
 
-type ScoreBoardProps = {
+interface ScoreBoardProps {
   scores: {
     X: number;
     O: number;
   };
-};
+}
 
-export const ScoreBoard: React.FC<ScoreBoardProps> = ({ scores }) => {
+function ScoreBoard({ scores }: ScoreBoardProps) {
   return (
     <View style={styles.scoreBoard}>
       <View style={styles.scoreItem}>
@@ -22,7 +22,7 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = ({ scores }) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   scoreBoard: {
@@ -43,3 +43,5 @@ const styles = StyleSheet.create({
     marginTop: 5
   }
 });
+
+export default ScoreBoard;

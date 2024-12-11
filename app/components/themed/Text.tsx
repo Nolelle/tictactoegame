@@ -9,11 +9,7 @@ interface TextProps extends RNTextProps {
   variant?: "header" | "body" | "caption";
 }
 
-export const Text: React.FC<TextProps> = ({
-  style,
-  variant = "body",
-  ...props
-}) => {
+const Text: React.FC<TextProps> = ({ style, variant = "body", ...props }) => {
   return (
     <RNText
       style={[
@@ -41,3 +37,5 @@ const styles = StyleSheet.create({
     color: "#666"
   }
 });
+
+export default Text;

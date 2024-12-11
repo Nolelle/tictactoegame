@@ -1,4 +1,3 @@
-// app/hooks/useGameEffects.ts
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Audio } from "expo-av";
 import * as Haptics from "expo-haptics";
@@ -7,11 +6,7 @@ import { useCallback, useEffect } from "react";
 type EffectType = "move" | "win" | "draw" | "button";
 type IntensityType = "light" | "medium" | "heavy";
 
-interface GameEffects {
-  playEffect: (effect: EffectType, intensity: IntensityType) => Promise<void>;
-}
-
-export function useGameEffects(): GameEffects {
+export const useGameEffects = () => {
   // Initialize audio
   useEffect(() => {
     Audio.setAudioModeAsync({
@@ -87,4 +82,4 @@ export function useGameEffects(): GameEffects {
   );
 
   return { playEffect };
-}
+};

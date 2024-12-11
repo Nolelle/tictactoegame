@@ -1,9 +1,9 @@
-import * as Haptics from "expo-haptics";
 import { Stack, router } from "expo-router";
 import React from "react";
 import { Animated, StyleSheet, View } from "react-native";
-import { Button } from "../components/themed/Button";
-import { Text } from "../components/themed/Text";
+import Button from "../components/themed/Button";
+import Text from "../components/themed/Text";
+import { triggerHaptic } from "../utils/haptics";
 
 export default function GameOverScreen() {
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
@@ -25,13 +25,13 @@ export default function GameOverScreen() {
     ]).start();
   }, []);
 
-  const handlePlayAgain = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    router.replace("/game");
+  const handlePlayAgain = async () => {
+    await triggerHaptic("medium");
+    router.replace("/screens/game");
   };
 
-  const handleMainMenu = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  const handleMainMenu = async () => {
+    await triggerHaptic("light");
     router.replace("/");
   };
 
@@ -43,7 +43,6 @@ export default function GameOverScreen() {
           headerShown: false
         }}
       />
-
       <Animated.View
         style={[
           styles.content,
@@ -60,7 +59,6 @@ export default function GameOverScreen() {
           Game Over!
         </Text>
         <Text style={styles.finalScore}>Final Score: 0-3</Text>
-
         <View style={styles.buttonContainer}>
           <Button
             title="Play Again"
@@ -98,25 +96,35 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5
+    elevation: 5,
+    width: "90%",
+    maxWidth: 400
   },
   gameOver: {
     fontSize: 36,
     marginBottom: 20,
-    color: "#4CAF50"
+    color: "#4CAF50",
+    textAlign: "center",
+    fontWeight: "bold"
   },
   finalScore: {
     fontSize: 24,
-    marginBottom: 30
+    marginBottom: 30,
+    color: "#333",
+    textAlign: "center"
   },
   buttonContainer: {
     width: "100%",
     gap: 10
   },
   playAgainButton: {
-    backgroundColor: "#4CAF50"
+    backgroundColor: "#4CAF50",
+    paddingVertical: 15,
+    width: "100%"
   },
   menuButton: {
-    backgroundColor: "#2196F3"
+    backgroundColor: "#2196F3",
+    paddingVertical: 15,
+    width: "100%"
   }
 });
