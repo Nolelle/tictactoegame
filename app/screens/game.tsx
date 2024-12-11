@@ -81,6 +81,11 @@ export default function GameScreen() {
 
   const handleBack = async () => {
     playEffect("button", "light");
+    // Clear game state and scores when going back
+    await AsyncStorage.removeItem("gameState");
+    await AsyncStorage.removeItem("scores");
+    // Reset local scores state
+    setScores({ X: 0, O: 0 });
     router.replace("/");
   };
 
