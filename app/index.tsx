@@ -15,7 +15,10 @@ export default function MenuScreen() {
 
   const handleStartGame = async () => {
     await triggerHaptic("medium");
-    router.push("../screens/game");
+    router.push({
+      pathname: "../screens/game",
+      params: { startingPlayer: selectedSymbol }
+    });
   };
 
   const handleSettings = async () => {
@@ -44,7 +47,14 @@ export default function MenuScreen() {
             ]}
             onPress={() => handleSymbolSelect("X")}
           >
-            <Text style={styles.symbolText}>X</Text>
+            <Text
+              style={[
+                styles.symbolText,
+                selectedSymbol === "X" && styles.selectedSymbolText
+              ]}
+            >
+              X
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -53,7 +63,14 @@ export default function MenuScreen() {
             ]}
             onPress={() => handleSymbolSelect("O")}
           >
-            <Text style={styles.symbolText}>O</Text>
+            <Text
+              style={[
+                styles.symbolText,
+                selectedSymbol === "O" && styles.selectedSymbolText
+              ]}
+            >
+              O
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -133,6 +150,9 @@ const styles = StyleSheet.create({
   selectedSymbol: {
     backgroundColor: "#4CAF50",
     borderColor: "#4CAF50"
+  },
+  selectedSymbolText: {
+    color: "#fff"
   },
   symbolText: {
     fontSize: 36,

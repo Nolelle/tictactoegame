@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Stack, router } from "expo-router";
+import { Stack, router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -12,8 +12,13 @@ import { checkGameStatus } from "../utils/gameLogic";
 import { triggerHaptic } from "../utils/haptics";
 
 export default function GameScreen() {
+  const { startingPlayer } = useLocalSearchParams<{
+    startingPlayer: "X" | "O";
+  }>();
   const [board, setBoard] = useState<string[]>(Array(9).fill(""));
-  const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">("X");
+  const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">(
+    startingPlayer || "X"
+  );
   const [scores, setScores] = useState({ X: 0, O: 0 });
   const { playEffect } = useGameEffects();
   const [settings] = useState({ vibrationEnabled: true });
@@ -92,6 +97,7 @@ export default function GameScreen() {
   const resetGame = async () => {
     playEffect("button", "medium");
     setBoard(Array(9).fill(""));
+    setCurrentPlayer(startingPlayer || "X"); // Reset to starting player
   };
 
   return (
@@ -136,7 +142,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
     alignItems: "center",
     justifyContent: "center",
-    padding: 20
+    padding: 20,
+    paddingTop: 40
   },
   header: {
     flexDirection: "row",
@@ -144,14 +151,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     marginBottom: 20,
-    position: "relative"
+    position: "relative",
+    paddingVertical: 10,
+    marginTop: 20
   },
   backButton: {
     position: "absolute",
     left: 0,
+    top: 10,
     backgroundColor: "#666",
     paddingHorizontal: 15,
-    paddingVertical: 8
+    paddingVertical: 8,
+    elevation: 3
   },
   turnIndicator: {
     fontSize: 24,
