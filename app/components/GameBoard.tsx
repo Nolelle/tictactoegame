@@ -49,20 +49,20 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    width: 300, // Board width
-    height: 300, // Board height
+    width: 300,
+    height: 300,
     backgroundColor: "#f0f0f0"
   },
   cell: {
-    width: 100, // Cell width (adjust for board size)
-    height: 100, // Cell height
+    width: 100,
+    height: 100,
     borderWidth: 1,
     borderColor: "#000",
     justifyContent: "center",
     alignItems: "center"
   },
   cellMarked: {
-    backgroundColor: "#dcdcdc" // Highlight for marked cells
+    backgroundColor: "#dcdcdc"
   },
   cellText: {
     fontSize: 24,
