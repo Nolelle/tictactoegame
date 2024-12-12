@@ -1,4 +1,3 @@
-// app/utils/sound.ts
 import { Audio } from "expo-av";
 import * as Haptics from "expo-haptics";
 
