@@ -110,12 +110,18 @@ export default function GameScreen() {
       <StatusBar style="auto" />
 
       <View style={styles.header}>
-        <Button
-          title="Back"
-          onPress={handleBack}
-          style={styles.backButton}
-        />
-        <Text style={styles.turnIndicator}>Player {currentPlayer}'s Turn</Text>
+        <View style={styles.backButtonContainer}>
+          <Button
+            title="Back"
+            onPress={handleBack}
+            style={styles.backButton}
+          />
+        </View>
+        <View style={styles.turnIndicatorContainer}>
+          <Text style={styles.turnIndicator}>
+            Player {currentPlayer}'s Turn
+          </Text>
+        </View>
       </View>
 
       <GameBoard
@@ -146,23 +152,24 @@ const styles = StyleSheet.create({
     paddingTop: 40
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     width: "100%",
     marginBottom: 20,
-    position: "relative",
-    paddingVertical: 10,
     marginTop: 20
   },
+  backButtonContainer: {
+    width: "100%",
+    marginBottom: 15
+  },
   backButton: {
-    position: "absolute",
-    left: 0,
-    top: 10,
+    alignSelf: "flex-start",
     backgroundColor: "#666",
     paddingHorizontal: 15,
     paddingVertical: 8,
     elevation: 3
+  },
+  turnIndicatorContainer: {
+    width: "100%",
+    alignItems: "center"
   },
   turnIndicator: {
     fontSize: 24,
